@@ -1,0 +1,99 @@
+@use '@angular/material' as mat;
+
+//_ Seis connecta colors
+//_ #fa6400 and #0b162c
+
+@include mat.core();
+
+$mat-seis-conecta: (
+  50 : #e2e3e6,
+  100 : #b6b9c0,
+  200 : #858b96,
+  300 : #545c6b,
+  400 : #30394c,
+  500 : #0b162c,
+  600 : #0a1327,
+  700 : #081021,
+  800 : #060c1b,
+  900 : #030610,
+  A100 : #5270ff,
+  A200 : #1f45ff,
+  A400 : #0028eb,
+  A700 : #0023d2,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #ffffff,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #ffffff,
+      A200 : #ffffff,
+      A400 : #ffffff,
+      A700 : #ffffff,
+  )
+);
+
+$mat-seis-conecta-accent: (
+  50 : #feece0,
+    100 : #fed1b3,
+    200 : #fdb280,
+    300 : #fc934d,
+    400 : #fb7b26,
+    500 : #fa6400,
+    600 : #f95c00,
+    700 : #f95200,
+    800 : #f84800,
+    900 : #f63600,
+    A100 : #ffffff,
+    A200 : #ffedea,
+    A400 : #ffc2b7,
+    A700 : #ffad9d,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$app-primary: mat.define-palette($mat-seis-conecta);
+$app-accent: mat.define-palette($mat-seis-conecta-accent, 900, 900, A400);
+
+// The warn palette is optional (defaults to red).
+$app-warn: mat.define-palette(mat.$red-palette);
+
+//_ For light theme
+:root {
+  $app-theme: mat.define-light-theme($app-primary, $app-accent, $app-warn);
+  @include mat.all-component-themes($app-theme);
+}
+
+//_ For dark theme
+body[color-theme="dark"] {
+  $app-theme: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
+  @include mat.all-component-themes($app-theme);
+
+  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html, body {
+  // height: 100%;
+}

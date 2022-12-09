@@ -1,0 +1,73 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Pokemon App</span>
+  <span class="flex-space"></span>
+</mat-toolbar>
+
+<ng-container [ngTemplateOutlet]="((pokemonList?.length > 0 && !loading) || tipoSeleccionado != 'todos') ? PokemonsListTemplate : NoPokemonsTemplate"></ng-container>
+
+<!-- 0 POKEMONS -->
+<ng-template #NoPokemonsTemplate>
+  <!-- LOADING indicator -->
+  <mat-spinner class="loading-indicator" *ngIf="loading" color="accent"></mat-spinner>
+
+  <mat-card class="example-card" *ngIf="!loading">
+    <mat-card-content>
+      <p>No has agregado ningun pokemon aun</p>
+      <ng-container [ngTemplateOutlet]="AddButton"></ng-container>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+
+<!-- LISTA DE POKEMONS -->
+<ng-template #PokemonsListTemplate>
+  <div class="top-add-button">
+    <ng-container [ngTemplateOutlet]="FiltroDeTipos"></ng-container>
+    <ng-container [ngTemplateOutlet]="AddButton"></ng-container>
+  </div>
+
+  <ng-container [ngTemplateOutlet]="NoFilteredData" *ngIf="pokemonList?.length == 0"></ng-container>
+
+  <mat-grid-list [cols]="viewCols" rowHeight="120px">
+    <mat-grid-tile *ngFor="let pokemon of pokemonList">
+      <mat-card class="pokemon-item" >
+        <mat-card-title>{{ pokemon.nombre }}</mat-card-title>
+        <mat-card-content>
+          <p>Peso: {{ pokemon.peso }}</p>
+          <p>Tipo: {{ pokemon.tipo }}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</ng-template>
+
+<!-- ADD BUTTON -->
+<ng-template #AddButton>
+  <button mat-raised-button  color="accent" (click)="openDialog()">
+    <mat-icon>add</mat-icon>
+    Agregar
+  </button>
+</ng-template>
+
+<!-- Filter button -->
+<ng-template #FiltroDeTipos>
+  <mat-form-field appearance="fill" class="filter-tipo">
+    <mat-label>Tipo</mat-label>
+    <mat-select [(ngModel)]="tipoSeleccionado" (ngModelChange)="filter()">
+      <mat-option value="todos">Todos</mat-option>
+      <mat-option *ngFor="let tipo of pokemonTipos" [value]="tipo.name">{{ tipo.name }}</mat-option>
+    </mat-select>
+    <br/>
+  </mat-form-field>
+</ng-template>
+
+<!-- NO DATA -->
+<ng-template #NoFilteredData>
+  <mat-card class="pokemon-item" >
+    <mat-card-content>
+      No hay ningun pokemon con los filtros aplicados.
+    </mat-card-content>
+  </mat-card>
+</ng-template>

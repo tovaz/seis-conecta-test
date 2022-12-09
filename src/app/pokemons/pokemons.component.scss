@@ -1,0 +1,27 @@
+.flex-space {
+  flex: 1 1 auto;
+}
+
+.top-add-button{
+  text-align: right;
+  margin: 15px;
+
+  .filter-tipo {
+    margin-right: 15px;
+  }
+}
+
+mat-grid-list{
+  margin: 15px;
+
+  .pokemon-item {
+    margin: 15px;
+    width: 100%;
+  }
+}
+
+
+.loading-indicator {
+  margin: 15px auto;
+  transform: scale(.5);
+}

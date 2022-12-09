@@ -1,0 +1,56 @@
+
+
+  <form (ngSubmit)="submit()" [formGroup]="pokemonForm.form">
+    <h3>Crear nuevo pokemon</h3>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput  formControlName="nombre" >
+      <br/>
+      <mat-error *ngIf="!pokemonForm?.form['nombre']?.valid">{{ pokemonForm?.messages[0].validations[0].message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Peso</mat-label>
+      <input matInput  formControlName="peso" type="number">
+      <br/>
+      <mat-error *ngIf="!pokemonForm?.form['peso']?.valid">{{ pokemonForm?.messages[1].validations[0].message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        <mat-option *ngFor="let tipo of pokemonTipos" [value]="tipo.name">{{ tipo.name }}</mat-option>
+      </mat-select>
+      <br/>
+      <mat-error *ngIf="!pokemonForm?.form['tipo']?.valid">{{ pokemonForm?.messages[2].validations[0].message }}</mat-error>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Imagen</mat-label>
+      <input type="file" matInput  formControlName="nombre" >
+      <mat-error *ngIf="!pokemonForm?.form['nombre']?.valid"></mat-error>
+    </mat-form-field> -->
+
+    <button mat-raised-button color="primary">
+      <mat-icon>save</mat-icon>
+      Guardar
+    </button>
+  </form>
+
+  <!-- ME FALTO COMPLETAR DE IMPLEMENTAR VARIAS VALIDACIONES POR CAMPO -->
+  <!-- <ng-template #ErrorMessage let-campo="campo">
+    <mat-error>
+      <div *ngFor="let item of pokemonForm?.messages">
+        {{ item?.validations.type }}
+        <div *ngFor="let validation of item?.validations">
+          <p
+            *ngIf="item.name == campo && pokemonForm?.form[campo]?.errors[validation.type] && (pokemonForm?.form[campo].dirty || pokemonForm?.form[campo].touched)"
+          >
+            {{ validation.message }}
+        </p>
+        </div>
+      </div>
+    </mat-error>
+  </ng-template> -->
+
