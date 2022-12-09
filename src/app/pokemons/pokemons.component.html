@@ -13,9 +13,10 @@
   <!-- LOADING indicator -->
   <mat-spinner class="loading-indicator" *ngIf="loading" color="accent"></mat-spinner>
 
-  <mat-card class="example-card" *ngIf="!loading">
+  <mat-card class="card-center-content" *ngIf="!loading">
     <mat-card-content>
-      <p>No has agregado ningun pokemon aun</p>
+      <img class="img-100" src="assets/images/no-data.svg" />
+      <h3>No has agregado ningun pokemon aun.</h3>
       <ng-container [ngTemplateOutlet]="AddButton"></ng-container>
     </mat-card-content>
   </mat-card>
@@ -30,7 +31,7 @@
 
   <ng-container [ngTemplateOutlet]="NoFilteredData" *ngIf="pokemonList?.length == 0"></ng-container>
 
-  <mat-grid-list [cols]="viewCols" rowHeight="120px">
+  <mat-grid-list [cols]="viewCols" rowHeight="130px">
     <mat-grid-tile *ngFor="let pokemon of pokemonList">
       <mat-card class="pokemon-item" >
         <mat-card-title>{{ pokemon.nombre }}</mat-card-title>
@@ -38,6 +39,20 @@
           <p>Peso: {{ pokemon.peso }}</p>
           <p>Tipo: {{ pokemon.tipo }}</p>
         </mat-card-content>
+
+        <button mat-mini-fab color="light" class="delete-button" [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="delete(pokemon)">
+            <mat-icon color="primary">delete</mat-icon>
+            Eliminar
+          </button>
+          <button mat-menu-item (click)="edit(pokemon)">
+            <mat-icon color="primary">edit</mat-icon>
+            Editar
+          </button>
+        </mat-menu>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
@@ -65,9 +80,10 @@
 
 <!-- NO DATA -->
 <ng-template #NoFilteredData>
-  <mat-card class="pokemon-item" >
+  <mat-card class="card-center-content">
+    <img class="img-100" src="assets/images/no-results.svg" />
     <mat-card-content>
-      No hay ningun pokemon con los filtros aplicados.
+      <h3>No hay ningun pokemon con los filtros aplicados.</h3>
     </mat-card-content>
   </mat-card>
 </ng-template>

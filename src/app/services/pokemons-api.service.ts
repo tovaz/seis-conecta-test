@@ -25,7 +25,7 @@ export class PokemonsApiService {
         })
       )
       .subscribe( (response: any) => {
-        this.pokemons = response;
+        this.pokemons = response.sort((a: any, b: any) => b.id - a.id);
         resolve(response)
       })
     });
@@ -59,9 +59,27 @@ export class PokemonsApiService {
         })
       )
       .subscribe( (response: any) => {
-        this.pokemons.push(response);
+        this.pokemons.unshift(response);
         resolve(response)
       })
     });
   }
+
+  delete(pokemon: any){
+    return new Promise( (resolve, reject) => {
+      this.http.delete(ENV.API_ROUTE + 'pokemon/' + pokemon.id)
+      .pipe(
+        retry(3), //_ intentar 3 veces obtener la informacion
+        catchError( (error, caugth) => { //_ rechazar la peticion
+          reject(error);
+          return throwError(() => new Error('A sucedido un error al obtener los pokemons.'));
+        })
+      )
+      .subscribe( (response: any) => {
+        this.pokemons = this.pokemons.filter(p => p.id != pokemon.id);
+        resolve(response)
+      })
+    });
+  }
+
 }

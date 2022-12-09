@@ -62,6 +62,7 @@ export class PokemonsComponent implements OnInit, AfterViewInit {
     return pokemonsFiltrados;
   }
 
+  //_ Change layout of columns
   @HostListener("window:resize", ["$event"])
   onResize(event: any) {
     this.viewCols = (window.innerWidth <= 400) ? 1 : 3;
@@ -73,6 +74,19 @@ export class PokemonsComponent implements OnInit, AfterViewInit {
         queryParams: parameters,
         replaceUrl: true
     });
-}
+  }
+
+  async delete(pokemon: any){
+    const confirmed = confirm("Confirma que quieres eliminar el pokemon ?");
+    if (confirmed){
+      this.pokeApi.delete(pokemon).then( r => {
+        this.filter();
+      });
+    }
+  }
+
+  edit(pokemon: any){
+
+  }
 
 }
